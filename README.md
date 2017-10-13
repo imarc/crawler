@@ -9,16 +9,16 @@ This could fairly easily be extended to do many other things. You would just nee
 
 ## usage
 CLI:
-`./bin/crawler URL DESTINATION` *(make sure that's executable)*
+`./bin/crawler csv URL DESTINATION` *(make sure that's executable)*
 
 PHP way:
-`php src/Crawler.php crawl URL DESTINATION`
+`php src/Crawler.php csv URL DESTINATION`
 
 ## options
 `./bin/crawler --help`
 ```
 Usage:
-  crawl [options] [--] <url> <destination>
+  csv [options] [--] <url> <destination>
 
 Arguments:
   url                    URL to crawl.

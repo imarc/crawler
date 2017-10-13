@@ -1,5 +1,5 @@
 {
-    "name": "imarc/crawlie",
+    "name": "imarc/crawler",
     "description": "crawl a site and get all the links",
     "type": "library",
     "require": {

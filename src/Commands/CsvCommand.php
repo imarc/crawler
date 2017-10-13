@@ -8,7 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Imarc\Crawler\Services\CrawlerService;
 use Pimple\Container;
 
-class CrawlCommand extends Command
+class CsvCommand extends Command
 {
     private $url;
     private $container;
@@ -17,7 +17,7 @@ class CrawlCommand extends Command
     {
         $this->container = new Container();
 
-        $this->setName('crawl')
+        $this->setName('csv')
             ->setDescription('Crawls a website.')
             ->setHelp("Crawl a site why don't ya.");
 
