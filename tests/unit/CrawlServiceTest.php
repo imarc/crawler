@@ -2,6 +2,8 @@
 
 use Imarc\Crawler\Services\CrawlerService;
 use Imarc\Crawler\Exceptions\InvalidUrlException;
+use Symfony\Component\Console\Tester\ApplicationTester;
+use Symfony\Component\Console\Application;
 
 class CrawlServiceTest extends \Codeception\Test\Unit
 {
@@ -10,6 +12,23 @@ class CrawlServiceTest extends \Codeception\Test\Unit
      */
     protected $tester;
     private $url;
+    private $container;
+    private $application;
+
+    protected function setUp()
+    {
+        $application = new Application();
+        $applicationTester = new ApplicationTester($application);
+        $application->setAutoExit(false);
+
+        $this->container = new \Pimple\Container();
+        $this->container['url'] = 'https://imarc.com';
+        $this->container['destination'] = '../_output/urls.csv';
+        $this->container['options'] = [
+            'showProgress' => false,
+            'output' => $applicationTester->getOutput(),
+        ];
+    }
 
     protected function _before()
     {
@@ -19,18 +38,20 @@ class CrawlServiceTest extends \Codeception\Test\Unit
     {
     }
 
+
     /**
      * @expectedException Imarc\Crawler\Exceptions\InvalidUrlException
      */
     public function testInvalidUrlException()
     {
-        $crawler = new CrawlerService('false');
+        $this->container['url'] = 'bad';
+        $crawler = new CrawlerService($this->container);
     }
 
     // tests
     public function testValidateUrl()
     {
-        $crawler = new CrawlerService('https://www.imarc.com');
+        $crawler = new CrawlerService($this->container);
         $this->assertInstanceOf(CrawlerService::class, $crawler);
     }
 
@@ -39,13 +60,13 @@ class CrawlServiceTest extends \Codeception\Test\Unit
      */
     public function testSetUrlException()
     {
-        $crawler = new CrawlerService('https://www.imarc.com');
+        $crawler = new CrawlerService($this->container);
         $crawler->setUrl('bad');
     }
 
     public function testSetUrlInstance()
     {
-        $crawler = new CrawlerService('https://www.imarc.com');
+        $crawler = new CrawlerService($this->container);
         $this->assertInstanceOf(CrawlerService::class, $crawler->validateUrl());
     }
 }

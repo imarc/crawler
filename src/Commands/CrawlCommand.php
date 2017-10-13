@@ -29,6 +29,40 @@ class CrawlCommand extends Command
             InputOption::VALUE_NONE,
             "Show the crawl's progress"
         );
+
+        $this->addOption(
+            'crawl-external',
+            'e',
+            InputOption::VALUE_NONE,
+            "Crawl external URLs"
+        );
+
+        $this->addOption(
+            'quiet',
+            'q',
+            InputOption::VALUE_NONE,
+            "Silence all output"
+        );
+
+        $this->addOption(
+            'exclude',
+            null,
+            InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
+            "Exclude certain extensions",
+            [
+                'css',
+                'gif',
+                'ico',
+                'jpg',
+                'jpg',
+                'js',
+                'pdf',
+                'pdf',
+                'png',
+                'rss',
+                'txt',
+            ]
+        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -36,8 +70,12 @@ class CrawlCommand extends Command
         $this->container['url'] = $input->getArgument('url');
         $this->container['destination'] = $input->getArgument('destination');
         $this->container['output'] = $output;
+        $this->container['input'] = $input;
         $this->container['options'] = [
             'showProgress' => $input->getOption('show-progress'),
+            'crawlExternal' => $input->getOption('crawl-external'),
+            'quiet' => $input->getOption('quiet'),
+            'exclude' => $input->getOption('exclude'),
         ];
 
         $crawler = new CrawlerService($this->container);

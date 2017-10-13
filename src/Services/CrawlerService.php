@@ -6,6 +6,8 @@ use Pimple\Container;
 use Respect\Validation\Validator as v;
 use Spatie\Crawler\Crawler;
 use Spatie\Crawler\CrawlObserver as ObserverInterface;
+use Spatie\Crawler\CrawlAllUrls;
+use Imarc\Crawler\Profiles\CrawlDefault;
 
 class CrawlerService {
 
@@ -21,7 +23,6 @@ class CrawlerService {
         $this->observer = $container['crawler'] ?? $this->observer;
 
         $this->validateUrl();
-        $this->initCrawler();
     }
 
     public function setUrl(string $url)
@@ -42,6 +43,7 @@ class CrawlerService {
 
     public function crawl()
     {
+        $this->initCrawler();
         $this->crawler->startCrawling($this->url);
     }
 
@@ -55,6 +57,12 @@ class CrawlerService {
     {
         $observer = new $this->observer($this->container);
         $crawler = Crawler::create()->setCrawlObserver($observer);
+
+        if ($this->container['options']['crawlExternal']) {
+            $crawler->setCrawlProfile((new CrawlAllUrls));
+        } else {
+            $crawler->setCrawlProfile((new CrawlDefault($this->container)));
+        }
 
         $this->crawler = $crawler;
     }
