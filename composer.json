@@ -15,9 +15,9 @@
     "autoload": {
         "psr-4": {"Imarc\\": "src/"}
     },
-    "bin": {
+    "bin": [
         "bin/crawler"
-    },
+    ],
     "license": "MIT",
     "authors": [
         {
