@@ -56,7 +56,17 @@ class CrawlerService {
     private function initCrawler()
     {
         $observer = new $this->observer($this->container);
-        $crawler = Crawler::create()->setCrawlObserver($observer);
+        $clientOptions = [];
+
+        if ($username = $this->container['options']['clientOptions']['httpUsername']) {
+            $clientOptions['auth'][] = $username;
+        }
+
+        if ($password = $this->container['options']['clientOptions']['httpPassword']) {
+            $clientOptions['auth'][] = $password;
+        }
+
+        $crawler = Crawler::create($clientOptions)->setCrawlObserver($observer);
 
         if ($this->container['options']['crawlExternal']) {
             $crawler->setCrawlProfile((new CrawlAllUrls));

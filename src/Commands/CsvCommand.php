@@ -76,6 +76,10 @@ class CsvCommand extends Command
             'crawlExternal' => $input->getOption('crawl-external'),
             'quiet' => $input->getOption('quiet'),
             'exclude' => $input->getOption('exclude'),
+            'clientOptions' => [
+                'httpUsername' => $input->getOption('http-username'),
+                'httpPassword' => $input->getOption('http-password'),
+            ]
         ];
 
         $crawler = new CrawlerService($this->container);

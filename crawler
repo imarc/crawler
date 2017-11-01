@@ -16,10 +16,16 @@ foreach ($paths as $path) {
 }
 
 
-use Symfony\Component\Console\Application;
 use Imarc\Crawler\Commands\CsvCommand;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Input\InputOption;
 
 $application = new Application('Imarc Crawler');
+
+$application->getDefinition()->addOptions([
+    new InputOption('--http-username', null, InputOption::VALUE_OPTIONAL, 'HTTP basic auth username', null),
+    new InputOption('--http-password', null, InputOption::VALUE_OPTIONAL, 'HTTP basic auth password', null),
+]);
 
 // ... register commands
 $application->add(new CsvCommand());

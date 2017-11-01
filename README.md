@@ -8,14 +8,12 @@ This could fairly easily be extended to do many other things. You would just nee
 `composer require imarc/crawler`
 
 ## usage
-CLI:
-`./bin/crawler csv URL DESTINATION` *(make sure that's executable)*
+From your project's directory: `./vendor/bin/crawler csv URL DESTINATION`
 
-PHP way:
-`php src/Crawler.php csv URL DESTINATION`
+From the repo: `./crawler.php csv URL DESTINATION`
 
 ## options
-`./bin/crawler --help`
+`crawler --help`
 ```
 Usage:
   csv [options] [--] <url> <destination>
